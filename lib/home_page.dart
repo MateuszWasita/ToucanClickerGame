@@ -9,36 +9,47 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-int overallScore = 0;
+class Globals {
+  static double overallScore = 0;
+  static double effects = 0;
+}
+
 double clicksPerSecond = 0.0;
-int clicks=0;
+double clicks = 0;
 
-Timer timer = Timer(Duration(seconds: 1), () { });
-
+Timer timer = Timer(Duration(seconds: 1), () {});
 
 class _HomePageState extends State<HomePage> {
+  void startTimer() {
+    const duration = Duration(seconds: 1);
+    timer = Timer.periodic(duration, (Timer t) {
+      setState(() {
+        Globals.overallScore+=Globals.effects;
+        clicksPerSecond = clicks + Globals.effects;
+        clicks = 0;
+      });
 
- void startTimer() {
-  const duration = Duration(seconds: 1);
-  timer = Timer.periodic(duration, (Timer t) {
-    setState(() {
-    clicksPerSecond = clicks.toDouble(); 
-    clicks=0;   
+      log(clicks.toString());
     });
+  }
 
-    log(clicks.toString());
-  });
-}
-void stopCounting() {
-  timer.cancel();
-}
-@override
+  void stopCounting() {
+    timer.cancel();
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     startTimer();
   }
-  
+
+  @override
+  void dispose() {
+    timer.cancel(); // Anuluj timer przed usunięciem obiektu stanu
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +57,9 @@ void stopCounting() {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("You are creating: " + '$clicksPerSecond' + " per second!"),
+            Text("You are creating: " +
+                '$clicksPerSecond' +
+                " toucans per second!"),
             Center(
               child: GestureDetector(
                 child: Image(
@@ -54,14 +67,12 @@ void stopCounting() {
                         'assets/png-clipart-toucan-bird-robotic-bird-silhouette.png')),
                 onTap: () {
                   setState(() {
-                    ++clicks;
-                    overallScore+=clicks;
+                    Globals.overallScore++;
                   });
                 },
               ),
             ),
-            Text('$overallScore'),
-
+            Text('Your toucans: ${Globals.overallScore}'),
           ],
         ));
   }
