@@ -57,17 +57,20 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("You are creating: " +
+            Text("You create: " +
                 '$clicksPerSecond' +
                 " toucans per second!"),
             Center(
               child: GestureDetector(
                 child: Image(
+                  width: 200,
+                  height: 300,
                     image: AssetImage(
-                        'assets/png-clipart-toucan-bird-robotic-bird-silhouette.png')),
+                        'assets/Tukan1.png')),
                 onTap: () {
                   setState(() {
                     Globals.overallScore++;
+                    ++clicks;
                   });
                 },
               ),

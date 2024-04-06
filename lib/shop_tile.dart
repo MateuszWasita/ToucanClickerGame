@@ -2,17 +2,18 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:toucan_clicker/home_page.dart';
+import 'package:toucan_clicker/styles.dart';
 
 class ShopTile {
   late double cost;
-  late Icon icon;
+  late Image image;
   late double effect;
   late String text;
   late final VoidCallback updateState;
 
-  ShopTile(double cost,Icon icon,double effect, String text, VoidCallback updateState) {
+  ShopTile(double cost,Image image,double effect, String text, VoidCallback updateState) {
     this.cost=cost;
-    this.icon = icon;
+    this.image=image;
     this.effect = effect;
     this.text=text;
     this.updateState = updateState;
@@ -37,31 +38,42 @@ class ShopTile {
               height: 80,
               width: 300,
               decoration: BoxDecoration(
-                color: Colors.green,
+                color: Globals.overallScore>=cost? Colors.green : Colors.grey,
                 borderRadius: BorderRadius.circular(7),
               ),
               child: Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
-                    child: Icon(Icons.hourglass_bottom),
+                    child: image,
                   ),
-                  Text(text),
+                  SizedBox(width: 10,),
+                  Text(text, style: shopStyle,),
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(right: 10.0),
-                    child: Text('x'+effect.toString()),
+                    child: Text('x'+effect.toString(), style: shopStyle,),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Image(
+                  width: 50,
+                  height: 50,
+                    image: AssetImage(
+                        'assets/Tukan1.png')),
                   )
                 ],
               ),
             ),
           ),
         ),
+        SizedBox(height: 10,),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Cost: 15"),
-            Icon(Icons.abc),
+            Text("Cost: " + '$cost', style: shopStyle,),
+            SizedBox(width: 10,),
+            
           ],
         )
       ],

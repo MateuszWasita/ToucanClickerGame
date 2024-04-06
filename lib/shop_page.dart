@@ -9,7 +9,11 @@ class ShopPage extends StatefulWidget {
   State<ShopPage> createState() => _ShopPageState();
 }
 
+
 class _ShopPageState extends State<ShopPage> {
+
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,16 +25,22 @@ class _ShopPageState extends State<ShopPage> {
             height: 50,
           ),
           ShopTile(
-            100,
-            Icon(Icons.abc),
-            0.25,"One toucan",
+            10,
+            Image(width:55, height: 55, image: AssetImage('assets/egg.png')),
+            0.25,"Toucan Egg",
             () {
               setState(() {
-                Globals.overallScore -= 100;
+                Globals.overallScore -= 10;
                 Globals.effects+=0.25;
               });
             },
-          ).makeTile()
+          ).makeTile(),
+          ShopTile(500, Image(width: 70,height: 70,image: AssetImage('assets/nest.png')), 5, 'Toucan Nest', () {
+            setState(() {
+                Globals.overallScore -= 500;
+                Globals.effects+=5;
+              });
+          },).makeTile()
         ],
       ),
     );
